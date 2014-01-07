@@ -2,51 +2,24 @@
 
 import time
 import RPi.GPIO as GPIO
-import urllib
-import urllib2
+
+def buttonEventHandler (pin):
+    print "Button pressed!"
 
 def main():
 
     GPIO.setmode(GPIO.BCM)
 
-    GPIO.setup(17,GPIO.IN)
-    GPIO.setup(18,GPIO.IN)
+    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    goal17 = 0
-    goal18 = 0
-
-    webserver = 'ip-address or domain'
+    GPIO.remove_event_detect(23)
+    GPIO.add_event_detect(23,GPIO.RISING)
+    GPIO.add_event_callback(23,buttonEventHandler,1000)
+    # time.sleep(5)
 
     while True:
-	if GPIO.input(17):
-		goal17 = 0
-	else:
-		goal17 = goal17+1
-		if goal17 == 1:
-			print "Made web request for goal 1"
-			url = 'http://'webserver'/goals/add/1'
-			values = {'key' : 'value' }
-			data = urllib.urlencode(values)
-			req = urllib2.Request(url, data)
-			response = urllib2.urlopen(req)
-			the_page = response.read()
-			time.sleep(2.0)
-			
-	if GPIO.input(18):
-		goal18 = 0
-	else:
-		goal18 = goal18+1
-		if goal18 == 1:
-			print "Made web request for goal 2"
-			url = 'http://'webserver'/goals/add/2'
-			values = {'key' : 'value' }
-			data = urllib.urlencode(values)
-			req = urllib2.Request(url, data)
-			response = urllib2.urlopen(req)
-			the_page = response.read()
-			time.sleep(2.0)
+        pass
 
-    print "button pushed"
 
     GPIO.cleanup()
 
