@@ -26,3 +26,12 @@ cd /home/pi
 git clone https://github.com/SMARoovers/FoosPi.git
 cd /home/pi/FoosPi
 ```
+
+Update FoodPi:
+
+Go to the FoosPi folder
+
+
+```
+git pull origin
+```

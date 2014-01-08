@@ -1,10 +1,30 @@
 #!/usr/bin/env python
 
+import os
 import time
 import RPi.GPIO as GPIO
+import sys
+import urllib
+import urllib2
+
+os.system('clear')
+venue = raw_input("Which venue is this? ")
+os.system('clear')
+print "Chosen venue is " + venue
+
+webserver = 'foosball.vicompany.local'
 
 def buttonEventHandler (pin):
-    print "Button pressed!"
+	print "Button pressed!"
+	try:
+		url = 'http://' + webserver + '/goals/add/' + venue + '/1'
+		values = {'key' : 'value' }
+		data = urllib.urlencode(values)
+		req = urllib2.Request(url, data)
+		response = urllib2.urlopen(req)
+		the_page = response.read()
+	except urllib2.HTTPError, e:
+		print e
 
 def main():
 
@@ -18,7 +38,16 @@ def main():
     # time.sleep(5)
 
     while True:
-        pass
+	os.system('clear')
+        print "Waiting for event."
+	time.sleep(1)
+	os.system('clear')
+        print "Waiting for event.."
+	time.sleep(1)
+	os.system('clear')
+        print "Waiting for event..."
+	time.sleep(1)
+
 
 
     GPIO.cleanup()
