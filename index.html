@@ -7,7 +7,8 @@
 			cache:false,
 			dataType: 'text',
 			success: function(text) {
-				$("#scriptoutput").text(text);
+				text = text.replace(/\n/g, '<br/>');
+				$("#scriptoutput").html(text);
 				$("#scriptoutput").animate({ scrollTop: $('#scriptoutput')[0].scrollHeight}, 500);
 				setTimeout(getLog, 3000); // refresh every 3 seconds
 			}
@@ -20,7 +21,7 @@
 <body onload="getLog()">
 <div style="text-align:center;">
 <h1>Raspberry Pi output</h1>
-<div id="scriptoutput" style="width:500px;height:100%;overflow:scroll;">
+<div id="scriptoutput" style="width:100%;height:100%;overflow:scroll;text-align:left;">
 </div>
 </div>
 <script src="//code.jquery.com/jquery.js"></script>
